@@ -19,7 +19,7 @@ func newNode[K, V any](key K, value V) *node[K, V] {
 // as arbitrary removals, to be completed in constant time.
 //
 //       LRU             MRU
-//        ↓ 			  ↓    (size==5)
+//        ↓               ↓    (size==5)
 // head ⇄ N ⇄ N ⇄ N ⇄ N ⇄ N ⇄ tail
 type list[K, V any] struct {
 	head *node[K, V] // head.next points to the LRU node
