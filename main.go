@@ -47,7 +47,8 @@ func main() {
 	// Person
 	personRepo := data.NewPersonRepository(db)
 	person := &data.Person{
-		Name: "Job 1",
+		GivenName:  "Bat",
+		FamilyName: "Man",
 	}
 	if err := personRepo.Create(ctx, person); err != nil {
 		log.Fatal(err)
@@ -62,21 +63,4 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Count %d\n", pcount)
-}
-
-func tx(err error, ctx context.Context, db *xorm.Engine, personRepo *data.PersonRepository, jobRepo *data.JobRepository) {
-	person, err := data.Tx(ctx, db, func(ctx context.Context) (*data.Job, error) {
-		if err := personRepo.Create(ctx, &data.Person{Name: "Person"}); err != nil {
-			return nil, err
-		}
-		jb := &data.Job{Name: "Job"}
-		if err := jobRepo.Create(ctx, jb); err != nil {
-			return nil, err
-		}
-		return jb, nil
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	_ = person
 }
